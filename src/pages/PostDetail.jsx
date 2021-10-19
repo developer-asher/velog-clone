@@ -1,16 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { history } from '../redux/configureStore';
 import Button from '../elements/Button';
 import Divider from '../elements/Divider';
 import FlexBox from '../elements/FlexBox';
 import Image from '../elements/Image';
 
-const PostDetail = ({ id }) => {
+const PostDetail = props => {
+  const id = props.match.params.id;
   console.log(id);
 
   const editPost = () => {
     console.log('게시글 수정');
+    history.push(`/post/edit/${id}`);
   };
   const deletePost = () => {
     console.log('게시글 삭제');
