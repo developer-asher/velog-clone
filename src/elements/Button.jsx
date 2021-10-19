@@ -6,9 +6,11 @@ const Button = ({ children, ...rest }) => {
 };
 
 const ButtonEle = styled.button`
-  border: ${props => (props.bd ? `${props.bd};` : `1px solid #ccc;`)};
+  ${props => (props.width ? `width:${props.width};` : ``)};
+  ${props => (props.height ? `height:${props.height};` : ``)};
+  border: ${props => (props.bd ? `${props.bd};` : `none;`)};
   border-radius: ${props => (props.bd_radius ? `${props.bd_radius};` : `0;`)};
-  padding: ${props => (props.padding ? `props.padding` : `5px 15px;`)};
+  padding: ${props => (props.padding ? `${props.padding};` : `5px 15px;`)};
   background-color: ${props =>
     props.bg_color ? `${props.bg_color};` : `transparent;`};
   color: ${props => (props.color ? `${props.color};` : `#333;`)};
