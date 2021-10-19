@@ -1,32 +1,55 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+//elements
+import Button from "../elements/Button";
+import FlexBox from "../elements/FlexBox";
+//components
+import Login from "./Login";
+import { getCookie, deleteCookie } from "../shared/Cookie";
 
-import Button from '../elements/Button';
-import FlexBox from '../elements/FlexBox';
+const Header = (props) => {
+  
+  const is_login = localStorage.getItem("token")
 
-const Header = props => {
+  
+  if (is_login) {
+    return (
+      <HeaderWrap>
+        <FlexBox bg_color="#ccc" justify="space-between">
+          <Logo>
+            <Button bd="none" ft_size="1.8rem">
+              velog
+            </Button>
+          </Logo>
+
+          <Button
+            bd_radius="30px"
+            bg_color="#ffffff"
+            color="#343a40"
+            ft_size="17px"
+          >
+            새 글 작성
+          </Button>
+        </FlexBox>
+      </HeaderWrap>
+    );
+  }
   return (
     <HeaderWrap>
       <FlexBox //
-        bg_color='#ccc'
-        justify='space-between'
+        bg_color="#ccc"
+        justify="space-between"
       >
         <Logo>
           <Button //
-            bd='none'
-            ft_size='1.8rem'
+            bd="none"
+            ft_size="1.8rem"
           >
             velog
           </Button>
         </Logo>
-        <Button
-          bd_radius='30px'
-          bg_color='#343a3f'
-          color='#ffffff'
-          ft_size='17px'
-        >
-          로그인
-        </Button>
+
+        <Login />
       </FlexBox>
     </HeaderWrap>
   );

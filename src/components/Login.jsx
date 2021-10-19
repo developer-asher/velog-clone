@@ -1,31 +1,73 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+import { useDispatch } from "react-redux";
+import { userActions } from "../redux/modules/user";
+
+//elements
+import Button from "../elements/Button";
 
 const Login = (props) => {
+  const dispatch = useDispatch();
+  const ref = useRef();
   // 로그인/회원가입 모달창
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [signupModal, setSignupModal] = React.useState(false);
+  //로그인 모달창 키면서 회원가입모달창 닫기(로그인 눌려서 로그인모달로이동)
   const openModal = () => {
     setSignupModal(false);
     setModalIsOpen(true);
   };
-
+  //로그인 모달창 닫기(X표시 눌려서닫기)
   const closeModal = () => {
     setModalIsOpen(false);
   };
+  //회원가입 모달창 키면서 로그인 모달창 닫기(회원가입 눌려서 회원가입모달로이동)
   const openSignupModal = () => {
     setModalIsOpen(false);
     setSignupModal(true);
   };
+  //회원가입 모달창 닫기(X표시 눌려서닫기)
   const closeSignupModal = () => {
     setSignupModal(false);
+  };
+  // 로그인 모달창 인풋값 관리
+  const [Email, setEmail] = React.useState("");
+  const [Pw, setPw] = React.useState("");
+
+  const user = { userEmail: Email, userPw: Pw }; //로그인 모달창 인풋값
+  const login = () => {
+    dispatch(userActions.loginDB(user));
+  };
+  //회원가입 모달창 인풋값 관리
+  const [userEmail, setUserEmail] = React.useState("");
+  const [userNickname, setUserNickname] = React.useState("");
+  const [userPw, setUserPw] = React.useState("");
+  const [userPwCheck, setUserPwCheck] = React.useState("");
+
+  const userinfo = { userEmail, userNickname, userPw, userPwCheck }; //회원가입 모달창 인풋값
+  const signup = () => {
+    dispatch(userActions.signupDB(userinfo));
   };
 
   return (
     <React.Fragment>
-      <button onClick={openModal}>로그인</button>
-      <Modal isOpen={modalIsOpen} close={closeModal} style={modalStyle}>
+      <Button
+        bd_radius="30px"
+        bg_color="#343a3f"
+        color="#ffffff"
+        ft_size="17px"
+        onClick={openModal}
+      >
+        로그인
+      </Button>
+      <Modal
+        isOpen={modalIsOpen}
+        close={closeModal}
+        style={modalStyle}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+      >
         <CloseButton
           src="https://image.flaticon.com/icons/png/512/458/458595.png"
           onClick={closeModal}
@@ -38,21 +80,39 @@ const Login = (props) => {
           <WelcText>환영합니다!</WelcText>
         </Box1>
         <Box2>
-          <text>이메일로 로그인</text>
+          <Text>이메일로 로그인</Text>
 
-          <LoginInput placeholder="이메일을 입력하세요" />
-          <LoginInput placeholder="비밀번호를 입력하세요" type="password" />
-          <LoginButton style={{ background: "#12b886" }}>로그인</LoginButton>
+          <LoginInput
+            placeholder="이메일을 입력하세요"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <LoginInput
+            placeholder="비밀번호를 입력하세요"
+            type="password"
+            onChange={(e) => {
+              setPw(e.target.value);
+            }}
+          />
+          <LoginButton style={{ background: "#12b886" }} onClick={login}>
+            로그인
+          </LoginButton>
           <div>
-            <text>
+            <Text>
               아직 회원이 아니신가요?
               <TextButton onClick={openSignupModal}>회원가입</TextButton>
-            </text>
+            </Text>
           </div>
         </Box2>
       </Modal>
 
-      <Modal isOpen={signupModal} close={closeSignupModal} style={modalStyle}>
+      <Modal
+        isOpen={signupModal}
+        close={closeSignupModal}
+        style={modalStyle}
+        ariaHideApp={false}
+      >
         <CloseButton
           src="https://image.flaticon.com/icons/png/512/458/458595.png"
           onClick={closeSignupModal}
@@ -65,18 +125,42 @@ const Login = (props) => {
           <WelcText>환영합니다!</WelcText>
         </Box1>
         <Box2>
-          <text>이메일로 회원가입</text>
+          <Text>이메일로 회원가입</Text>
 
-          <LoginInput placeholder="이메일을 입력하세요" />
-          <LoginInput placeholder="닉네임을 입력하세요" />
-          <LoginInput placeholder="비밀번호를 입력하세요" type="password" />
-          <LoginInput placeholder="비밀번호를 입력하세요" type="password" />
-          <LoginButton style={{ background: "#12b886" }}>회원가입</LoginButton>
+          <LoginInput
+            placeholder="이메일을 입력하세요"
+            onChange={(e) => {
+              setUserEmail(e.target.value);
+            }}
+          />
+          <LoginInput
+            placeholder="닉네임을 입력하세요"
+            onChange={(e) => {
+              setUserNickname(e.target.value);
+            }}
+          />
+          <LoginInput
+            placeholder="비밀번호를 입력하세요"
+            type="password"
+            onChange={(e) => {
+              setUserPw(e.target.value);
+            }}
+          />
+          <LoginInput
+            placeholder="비밀번호를 입력하세요"
+            type="password"
+            onChange={(e) => {
+              setUserPwCheck(e.target.value);
+            }}
+          />
+          <LoginButton style={{ background: "#12b886" }} onClick={signup}>
+            회원가입
+          </LoginButton>
           <div>
-            <text>
+            <Text>
               계정이 이미 있으신가요?
               <TextButton onClick={openModal}>로그인</TextButton>
-            </text>
+            </Text>
           </div>
         </Box2>
       </Modal>
@@ -101,6 +185,7 @@ const modalStyle = {
     border: "none",
     boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
     overflow: "hidden",
+    ariaHideApp: "false",
   },
 };
 
@@ -124,14 +209,12 @@ const Box1 = styled.div`
   position: absolute;
   align-items: center;
   z-index: 0;
-  
 `;
 
 const Box2 = styled.div`
   margin-top: 60px;
   margin-left: 250px;
   z-index: 10;
-  
 `;
 
 const CharImg = styled.img`
@@ -168,10 +251,11 @@ const LoginButton = styled.button`
   border: none;
   font-size: 16px;
   font-weight: bold;
-  color: #fff
-  background-color: #12b886
-  
- 
+  color: #fff;
+  background-color: #12b886;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Text = styled.p``;
