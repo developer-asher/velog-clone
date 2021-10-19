@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import { history } from '../redux/configureStore';
 import Button from '../elements/Button';
 import FlexBox from '../elements/FlexBox';
+import ToggleUserMenu from './ToggleUserMenu';
 
 const Header = props => {
   const is_login = true;
+  const modal = useRef();
+  const [toggle, setToggle] = useState(false);
 
   const moveToMain = () => {
     history.push('/');
   };
-  const moveToUser = () => {
-    //유저페이지로 이동
+
+  const toggleUserMenu = e => {
+    setToggle(!toggle);
   };
+
+  const handleClickOutside = ({ target }) => {
+    if (modal && !modal.current.contains(target)) {
+      setToggle(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <HeaderWrap>
@@ -28,7 +46,11 @@ const Header = props => {
           </Button>
         </Logo>
         {is_login ? (
-          <LoginStBox onClick={moveToUser}>
+          <LoginStBox
+            ref={modal}
+            className='user_menu'
+            onClick={toggleUserMenu}
+          >
             <Button
               width='50px'
               height='50px'
@@ -40,6 +62,7 @@ const Header = props => {
               S
             </Button>
             <ArrowDropDownIcon sx={{ color: '#777' }} />
+            <ToggleUserMenu visible={toggle} />
           </LoginStBox>
         ) : (
           <Button
@@ -62,6 +85,7 @@ const HeaderWrap = styled.header`
 const Logo = styled.h1``;
 
 const LoginStBox = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
