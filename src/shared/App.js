@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Container>
-        <Header />
+        {/* <Header /> */}
         <ConnectedRouter history={history}>
           <Route path={['/', '/post']} exact component={PostList} />
           <Route path='/post/detail/:id' exact component={PostDetail} />
@@ -23,12 +23,14 @@ function App() {
           <Route path='/post/edit/:id' exact component={PostEdit} />
         </ConnectedRouter>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
 
 const Container = styled.div`
+  min-height: 100%;
+  height: 100%;
   width: 80%;
   margin: 0 auto;
 `;

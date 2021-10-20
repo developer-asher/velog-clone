@@ -1,9 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
+import apis from '../../shared/apis';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
 dotenv.config();
-import apis from '../../shared/apis';
 
 // aws s3 통신하는 부분
 AWS.config.update({

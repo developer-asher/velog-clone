@@ -8,7 +8,7 @@ import FlexBox from '../elements/FlexBox';
 import ToggleUserMenu from './ToggleUserMenu';
 
 const Header = props => {
-  const is_login = true;
+  const is_login = false;
   const modal = useRef();
   const [toggle, setToggle] = useState(false);
 
@@ -27,7 +27,9 @@ const Header = props => {
   };
 
   useEffect(() => {
-    window.addEventListener('click', handleClickOutside);
+    if (is_login) {
+      window.addEventListener('click', handleClickOutside);
+    }
 
     return () => {
       window.removeEventListener('click', handleClickOutside);
