@@ -47,8 +47,32 @@ const Login = (props) => {
 
   const userinfo = { userEmail, userNickname, userPw, userPwCheck }; //회원가입 모달창 인풋값
   const signup = () => {
-    console.log(userinfo);
-    dispatch(userActions.signupDB(userinfo));
+    if (userPw !== userPwCheck) {
+      window.alert("비밀번호가 같지 않습니다.");
+    } else {
+      dispatch(userActions.signupDB(userinfo));
+      openModal();
+    }
+  };
+
+  const checkPassword = (e) => {
+    //  8 ~ 10자 영문, 숫자 조합
+    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/;
+    // 형식에 맞는 경우 true 리턴
+    console.log("패스워드 유효성 검사 :: ", regExp.test(e.target.value));
+    if (!regExp.test(e.target.value)) {
+      window.alert("8 ~ 10자 영문, 숫자 조합");
+    }
+  };
+
+  const checkEmail = (e) => {
+    var regExp =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    // 형식에 맞는 경우 true 리턴
+    console.log("이메일 유효성 검사 :: ", regExp.test(e.target.value));
+    if (!regExp.test(e.target.value)) {
+      window.alert("이메일 형식에 맞지 않습니다.");
+    }
   };
 
   return (
@@ -133,6 +157,7 @@ const Login = (props) => {
             onChange={(e) => {
               setUserEmail(e.target.value);
             }}
+            onBlur={checkEmail}
           />
           <LoginInput
             placeholder="닉네임을 입력하세요"
@@ -146,6 +171,7 @@ const Login = (props) => {
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
+            onBlur={checkPassword}
           />
           <LoginInput
             placeholder="비밀번호를 입력하세요"

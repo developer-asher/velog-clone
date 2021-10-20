@@ -27,7 +27,7 @@ const UserList = () => {
                 폰트색상도 약간 연하구여, 글씨가 많아지면 알아서 잘려서
                 보입니다. 글의 상단만 보일 수 있게 해주져!! 짱이져?
               </PostTextPreview>
-              <PostHashtagWrap>
+              {/* <PostHashtagWrap>
                 <a href="#" style={{ textDecoration: "none" }}>
                   <PostTag>Project</PostTag>
                 </a>
@@ -40,7 +40,7 @@ const UserList = () => {
                 <a href="#" style={{ textDecoration: "none" }}>
                   <PostTag>database</PostTag>
                 </a>
-              </PostHashtagWrap>
+              </PostHashtagWrap> */}
               <CommentInfoWrap>
                 <span>6일 전</span>
                 <CommentPointfont> · </CommentPointfont>

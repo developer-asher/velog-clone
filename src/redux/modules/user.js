@@ -14,7 +14,6 @@ const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const initialState = {
   user: null,
   is_login: false,
-  userNickname: "donggun",
 };
 
 //middlewarse
@@ -25,9 +24,8 @@ const signupDB = (userinfo) => {
       .signUp(userinfo)
       .then((res) => {
         console.log(res);
-        
+
         window.alert("회원가입이 되었습니다.");
-        // history.push("/")
       })
       .catch((err) => {
         console.log(err);
@@ -42,21 +40,23 @@ const loginDB = (user) => {
       .then((res) => {
         const userInfo = res.data;
         dispatch(setUser(userInfo));
-        console.log(userInfo);
-
-        // history.push("/");
       })
       .catch((err) => {
-        console.log(err);
+        window.alert("회원정보가 잘못되었습니다.");
       });
   };
 };
 
-// const loginCheckDB () => {
-//   return function (dispatch, getState, {history}) {
-//     apis.
-//   }
-// }
+const loginCheckDB = () => {
+  return function (dispatch, getState, { history }) {
+    const tokenCheck = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    
+    if (tokenCheck) {
+      dispatch(setUser({username:username}));
+    }
+  };
+};
 
 //reducer
 export default handleActions(
@@ -64,12 +64,14 @@ export default handleActions(
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
         localStorage.setItem("token", action.payload.user.token);
+        localStorage.setItem("username", action.payload.user.userNickname);
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
         draft.user = null;
         draft.is_login = false;
       }),
@@ -78,7 +80,8 @@ export default handleActions(
 );
 
 export const userActions = {
+  logOut,
   loginDB,
   signupDB,
-  // loginCheckDB,
+  loginCheckDB,
 };

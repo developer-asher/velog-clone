@@ -4,15 +4,21 @@ import styled from 'styled-components';
 import { history } from '../redux/configureStore';
 import UserMenu from './UserMenu';
 
+import { userActions } from '../redux/modules/user';
+import { useDispatch } from 'react-redux';
+
 const ToggleUserMenu = ({ visible }) => {
+  const dispatch = useDispatch();
   const handleClick = ({ target }) => {
     if (target.classList.contains('post_my')) {
+      history.push("/mypage")
       // 유제 페이지로 이동
     }
     if (target.classList.contains('post_write')) {
       history.push('/post/write');
     }
     if (target.classList.contains('logout')) {
+      dispatch(userActions.logOut())
       // 로그아웃
     }
   };

@@ -11,7 +11,6 @@ const UserPage = (props) => {
     <React.Fragment>
       <UserInfo />
       <UserList />
-      <Login/>
     </React.Fragment>
   );
 };

@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const UserInfo = () => {
+  const userNickname = localStorage.getItem("username")
   return (
     <React.Fragment>
       <Wrap>
@@ -10,8 +12,8 @@ const UserInfo = () => {
             <UserInfoDiv>
               <UserProfile></UserProfile>
               <UserTextDiv>
-                <UserNickName>파프리크아앙</UserNickName>
-                <UserBlogDiscription>자면 안된드아아앙</UserBlogDiscription>
+                <UserNickName>{userNickname}</UserNickName>
+                {/* <UserBlogDiscription>자면 안된드아아앙</UserBlogDiscription> */}
               </UserTextDiv>
             </UserInfoDiv>
             <DivLine></DivLine>

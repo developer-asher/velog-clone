@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { history } from "../redux/configureStore";
+
 import styled from "styled-components";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import { history } from "../redux/configureStore";
 import Button from "../elements/Button";
 import FlexBox from "../elements/FlexBox";
 import ToggleUserMenu from "./ToggleUserMenu";
 
 import Login from "./Login";
+
 const Header = (props) => {
-  const is_login = false;
+  const is_login = useSelector((state) => state.user.is_login);
+
   const modal = useRef();
   const [toggle, setToggle] = useState(false);
 
