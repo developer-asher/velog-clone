@@ -4,7 +4,7 @@ import FlexBox from '../elements/FlexBox';
 import { history } from '../redux/configureStore';
 
 const Post = ({
-  id,
+  postId,
   postTitle,
   postContent,
   postImage,
@@ -13,12 +13,13 @@ const Post = ({
 }) => {
   //
   const handleClick = () => {
-    history.push(`/post/detail/${id}`);
+    history.push(`/post/detail/${postId}`);
   };
 
   return (
     <Item onClick={handleClick}>
-      <img src={postImage} alt='' />
+      {/* <img src={postImage} alt='' /> */}
+      <img src='http://via.placeholder.com/50x25' alt='' />
       <div className='desc'>
         <h2 className='title'>{postTitle}</h2>
         <p className='content'>{postContent}</p>
