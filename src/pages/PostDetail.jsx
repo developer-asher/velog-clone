@@ -1,72 +1,82 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { history } from "../redux/configureStore";
+//elements
+import Button from "../elements/Button";
+import Divider from "../elements/Divider";
+import FlexBox from "../elements/FlexBox";
+import Image from "../elements/Image";
+//components
+import CommentWrite from "../components/CommentWrite";
+import Comment from "../components/Comment";
+import CommentList from "../components/CommentList";
 
-import { history } from '../redux/configureStore';
-import Button from '../elements/Button';
-import Divider from '../elements/Divider';
-import FlexBox from '../elements/FlexBox';
-import Image from '../elements/Image';
-
-const PostDetail = props => {
+const PostDetail = (props) => {
+  const commentlist = useSelector((state) => state.comment.commentList);
+  
   const id = props.match.params.id;
-  console.log(id);
 
   const editPost = () => {
-    console.log('게시글 수정');
+    console.log("게시글 수정");
     history.push(`/post/edit/${id}`);
   };
   const deletePost = () => {
-    console.log('게시글 삭제');
+    console.log("게시글 삭제");
   };
 
   return (
-    <FlexBox justify='space-between'>
-      <Section>
-        <Head className='head'>
-          <Title>2021 백엔드 개발자 로두맵11111</Title>
-          <ButtonWrap className='btn_list'>
-            <Button ft_size='1.1rem' onClick={editPost}>
-              수정
-            </Button>
-            <Button ft_size='1.1rem' onClick={deletePost}>
-              삭제
-            </Button>
-          </ButtonWrap>
+    <>
+      <FlexBox justify="space-between">
+        <Section>
+          <Head className="head">
+            <Title>2021 백엔드 개발자 로두맵11111</Title>
+            <ButtonWrap className="btn_list">
+              <Button ft_size="1.1rem" onClick={editPost}>
+                수정
+              </Button>
+              <Button ft_size="1.1rem" onClick={deletePost}>
+                삭제
+              </Button>
+            </ButtonWrap>
 
-          <FlexBox margin='10px 0 60px 0'>
-            <VelogName className='nickname'>nick name</VelogName>
-            <Divider>∙</Divider>
-            <Date className='post_date'>2021년 10월 9일</Date>
-          </FlexBox>
-        </Head>
+            <FlexBox margin="10px 0 60px 0">
+              <VelogName className="nickname">nick name</VelogName>
+              <Divider>∙</Divider>
+              <Date className="post_date">2021년 10월 9일</Date>
+            </FlexBox>
+          </Head>
 
-        <ContentWrap className='content'>
-          <Image src='http://via.placeholder.com/100x30' alt='임시' />
-          <Content>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-            inventore esse at aut sit tenetur consequuntur itaque ea reiciendis
-            ipsa excepturi quo laborum, modi omnis reprehenderit magnam.
-            Aliquid, recusandae quis!
-          </Content>
-        </ContentWrap>
+          <ContentWrap className="content">
+            <Image src="http://via.placeholder.com/100x30" alt="임시" />
+            <Content>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
+              inventore esse at aut sit tenetur consequuntur itaque ea
+              reiciendis ipsa excepturi quo laborum, modi omnis reprehenderit
+              magnam. Aliquid, recusandae quis!
+            </Content>
+          </ContentWrap>
 
-        <Profile className='flexbox profile'>
-          <Image src='http://via.placeholder.com/100x100' alt='임시' />
-          <ProfileInfo>
-            <ProfileName>nick name</ProfileName>
-            <ProfileDesc>간단한 자기소개</ProfileDesc>
-          </ProfileInfo>
-        </Profile>
-        {/* comment input compo */}
-        {/* comment list compo */}
-      </Section>
-      <Aside>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-        inventore esse at aut sit tenetur consequuntur itaque ea reiciendis ipsa
-        excepturi quo laborum, modi omnis reprehenderit magnam. Aliquid,
-        recusandae quis!
-      </Aside>
-    </FlexBox>
+          <Profile className="flexbox profile">
+            <Image src="http://via.placeholder.com/100x100" alt="임시" />
+            <ProfileInfo>
+              <ProfileName>nick name</ProfileName>
+              <ProfileDesc>간단한 자기소개</ProfileDesc>
+            </ProfileInfo>
+          </Profile>
+          {/* comment input compo */}
+          {/* comment list compo */}
+        </Section>
+        <Aside>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam
+          inventore esse at aut sit tenetur consequuntur itaque ea reiciendis
+          ipsa excepturi quo laborum, modi omnis reprehenderit magnam. Aliquid,
+          recusandae quis!
+        </Aside>
+      </FlexBox>
+      <CommentWrite postId={id} />
+      <CommentList postId={id} />
+    </>
   );
 };
 

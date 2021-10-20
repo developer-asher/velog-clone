@@ -1,22 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import React, { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import { history } from '../redux/configureStore';
-import Button from '../elements/Button';
-import FlexBox from '../elements/FlexBox';
-import ToggleUserMenu from './ToggleUserMenu';
+import { history } from "../redux/configureStore";
+import Button from "../elements/Button";
+import FlexBox from "../elements/FlexBox";
+import ToggleUserMenu from "./ToggleUserMenu";
 
-const Header = props => {
-  const is_login = true;
+import Login from "./Login";
+const Header = (props) => {
+  const is_login = false;
   const modal = useRef();
   const [toggle, setToggle] = useState(false);
 
   const moveToMain = () => {
-    history.push('/');
+    history.push("/");
   };
 
-  const toggleUserMenu = e => {
+  const toggleUserMenu = (e) => {
     setToggle(!toggle);
   };
 
@@ -27,19 +28,21 @@ const Header = props => {
   };
 
   useEffect(() => {
-    window.addEventListener('click', handleClickOutside);
+    if (is_login) {
+      window.addEventListener("click", handleClickOutside);
+    }
 
     return () => {
-      window.removeEventListener('click', handleClickOutside);
+      window.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
   return (
     <HeaderWrap>
-      <FlexBox justify='space-between'>
+      <FlexBox justify="space-between">
         <Logo>
           <Button //
-            ft_size='1.8rem'
+            ft_size="1.8rem"
             onClick={moveToMain}
           >
             velog
@@ -48,31 +51,24 @@ const Header = props => {
         {is_login ? (
           <LoginStBox
             ref={modal}
-            className='user_menu'
+            className="user_menu"
             onClick={toggleUserMenu}
           >
             <Button
-              width='50px'
-              height='50px'
-              bd_radius='50%'
-              bg_color='#0097a7'
-              color='#ffffff'
-              ft_size='1.3rem'
+              width="50px"
+              height="50px"
+              bd_radius="50%"
+              bg_color="#0097a7"
+              color="#ffffff"
+              ft_size="1.3rem"
             >
               S
             </Button>
-            <ArrowDropDownIcon sx={{ color: '#777' }} />
+            <ArrowDropDownIcon sx={{ color: "#777" }} />
             <ToggleUserMenu visible={toggle} />
           </LoginStBox>
         ) : (
-          <Button
-            bd_radius='30px'
-            bg_color='#343a3f'
-            color='#ffffff'
-            ft_size='1.1rem'
-          >
-            로그인
-          </Button>
+          <Login />
         )}
       </FlexBox>
     </HeaderWrap>

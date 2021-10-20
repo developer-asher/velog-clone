@@ -9,7 +9,7 @@ import Button from "../elements/Button";
 
 const Login = (props) => {
   const dispatch = useDispatch();
-  const ref = useRef();
+
   // 로그인/회원가입 모달창
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [signupModal, setSignupModal] = React.useState(false);
@@ -47,6 +47,7 @@ const Login = (props) => {
 
   const userinfo = { userEmail, userNickname, userPw, userPwCheck }; //회원가입 모달창 인풋값
   const signup = () => {
+    console.log(userinfo);
     dispatch(userActions.signupDB(userinfo));
   };
 

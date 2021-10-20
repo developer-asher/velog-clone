@@ -14,6 +14,7 @@ const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const initialState = {
   user: null,
   is_login: false,
+  userNickname: "donggun",
 };
 
 //middlewarse
@@ -24,6 +25,7 @@ const signupDB = (userinfo) => {
       .signUp(userinfo)
       .then((res) => {
         console.log(res);
+        
         window.alert("회원가입이 되었습니다.");
         // history.push("/")
       })
@@ -56,6 +58,7 @@ const loginDB = (user) => {
 //   }
 // }
 
+//reducer
 export default handleActions(
   {
     [SET_USER]: (state, action) =>
