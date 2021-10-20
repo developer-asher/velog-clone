@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Divider = ({ children }) => {
-  return <Item>{children}</Item>;
+const Divider = ({ children, ...rest }) => {
+  return <Item {...rest}>{children}</Item>;
 };
 
 const Item = styled.span`

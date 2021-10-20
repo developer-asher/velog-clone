@@ -12,6 +12,7 @@ const Flex = styled.div`
     props.justify ? `${props.justify};` : `flex-start;`};
   align-items: ${props =>
     props.align_items ? `${props.align_items};` : `center`};
+  ${props => (props.height ? `height: ${props.height}` : ``)};
   ${props => (props.margin ? `margin: ${props.margin}` : ``)};
   background-color: ${props => (props.bg_color ? `${props.bg_color};` : ``)};
 `;
