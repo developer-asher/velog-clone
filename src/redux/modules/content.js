@@ -2,23 +2,64 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import apis from '../../shared/apis';
 
-const GET_CONTENT = 'GET_COMMENT';
+const SET_CONTENT = 'SET_COMMENT';
+const ADD_CONTENT = 'ADD_COMMENT';
 
-const initialState = {};
+const initialState = {
+  list: [],
+};
 
-const getContent = createAction(GET_CONTENT, () => ({}));
+const setContent = createAction(SET_CONTENT, posts => ({ posts }));
+const addContent = createAction(ADD_CONTENT, () => ({}));
 
-const getContentDB = post_id => {
-  return function (dispatch, getState, { history }) {};
+const getContentDB = () => {
+  return function (dispatch, getState, { history }) {
+    console.log('게시글 전체 조회');
+
+    apis
+      .getContentPost()
+      .then(res => {
+        console.log(res);
+        const posts = res.data.posts;
+
+        dispatch(setContent(posts));
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+};
+
+const addContentDB = post => {
+  return function (dispatch, getState, { history }) {
+    console.log('게시글 전체 조회', post);
+
+    apis
+      .addContentPost(post)
+      .then(res => {
+        console.log(res);
+        // const new_list = res.data;
+
+        // dispatch(addContent(new_list));
+        // history.replace('/');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
 };
 
 export default handleActions(
   {
-    [GET_CONTENT]: (state, action) => produce(state, draft => {}),
+    [SET_CONTENT]: (state, action) =>
+      produce(state, draft => {
+        draft.list = action.payload.posts;
+      }),
   },
   initialState,
 );
 
-export const commentActions = {
+export const contentActions = {
   getContentDB,
+  addContentDB,
 };
