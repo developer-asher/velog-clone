@@ -11,6 +11,9 @@
 # production
 /build
 
+# aws pool id
+.env
+
 # misc
 .DS_Store
 .env.local
