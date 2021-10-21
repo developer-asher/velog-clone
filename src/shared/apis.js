@@ -12,12 +12,34 @@ const instance = axios.create({
 });
 
 const apis = {
-  // 게시물 불러오기
+  // 로그인
+  signUp: userinfo => instance.post('/users/signup', userinfo),
+  Login: user => instance.post('/users/auth', user),
+
+  // 게시물
   getContentPost: () => instance.get('/posts'),
-  addContentPost: post =>
-    instance.post('/posts', post, { headers: authHeader() }),
-  // deleteContentPost: post_id =>
-  //   instance.delete(`/posts/${post_id}`, { headers: authHeader() }),
+  detailContentPost: postId =>
+    instance.get(`/posts/${postId}`, { headers: authHeader() }),
+  addContentPost: postInfo =>
+    instance.post('/posts', postInfo, { headers: authHeader() }),
+  editContentPost: (postId, postInfo) =>
+    instance.patch(`/posts/${postId}`, postInfo, { headers: authHeader() }),
+  deleteContentPost: postId =>
+    instance.delete(`/posts/${postId}`, { headers: authHeader() }),
+
+  // 댓글
+  addCommentPost: (postId, commentData) =>
+    instance.post(`/posts/${postId}/comments`, commentData, {
+      headers: authHeader(),
+    }),
+  editCommentPost: (postId, commentId, commentData) =>
+    instance.patch(`/posts/${postId}/comments/${commentId}`, commentData, {
+      headers: authHeader(),
+    }),
+  deleteCommentPost: (postId, commentId) =>
+    instance.delete(`/posts/${postId}/comments/${commentId}`, {
+      headers: authHeader(),
+    }),
 };
 
 export default apis;
