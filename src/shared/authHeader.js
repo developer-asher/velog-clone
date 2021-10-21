@@ -1,5 +1,5 @@
 export default function authHeader() {
-  const token = sessionStorage.getItem('auth');
+  const token = localStorage.getItem('token');
 
   if (token) {
     return {
