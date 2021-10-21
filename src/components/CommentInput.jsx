@@ -1,51 +1,75 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
-const CommentInput = () => {
-  
-    return (
-        <React.Fragment>
-            <CmtDiv>
-                <h4>5개의 댓글</h4>
-                <CmtTextarea placeholder="댓글을 작성하세요"></CmtTextarea>
-                <div style={{margin:"20px 10px 10px 0px"}}><CmtButton>댓글 작성</CmtButton></div>
-            </CmtDiv>
-        </React.Fragment>
-    );
-}
+import { commentActions } from '../redux/modules/comment';
+import Button from '../elements/Button';
+
+const CommentInput = ({ postId, count }) => {
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({ comment: '' });
+  const { comment } = input;
+
+  const handleChange = e => {
+    const { value, name } = e.target;
+
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const handleClick = e => {
+    e.preventDefault();
+    dispatch(commentActions.addCommentDB(postId, comment));
+    setInput({
+      comment: '',
+    });
+  };
+
+  return (
+    <>
+      <CmtDiv>
+        <h4>{count}개의 댓글</h4>
+        <CmtTextarea //
+          name='comment'
+          value={comment}
+          placeholder='댓글을 작성하세요'
+          onChange={handleChange}
+        />
+        <div style={{ margin: '20px 10px 10px 0px', textAlign: 'right' }}>
+          <Button
+            bd_radius='5px'
+            bg_color='#12b886'
+            color='#fff'
+            ft_size='1.2rem'
+            onClick={handleClick}
+          >
+            댓글 작성
+          </Button>
+        </div>
+      </CmtDiv>
+    </>
+  );
+};
 
 const CmtDiv = styled.div`
-    padding: 10px;
+  padding: 10px;
 `;
 
 const CmtTextarea = styled.textarea`
-    width: calc(100% - 10px);
-    height: 90px;
-    border: 1px solid #EAEAEA;
-    font-size: 14pt;
-    font-weight: bold;
+  width: calc(100% - 10px);
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #eaeaea;
+  font-size: 1rem;
+
+  ${propr =>
+    propr.placeholder &&
+    `
+      &::placeholder {
+        color: #aaa;
+        font-style: italic;
+    `}
 `;
-
-// const CmtTextarea::placeholder = styled.textarea`
-//     color: #D5D5D5;
-// `;
-
-const CmtButton = styled.button`
-    width: 120px;
-    height: 33px;
-    background-color: #12B886;
-    color: #fff;
-    padding: 0px 15px;
-    box-size: border-box;
-    font-size: 19px;
-    font-weight: 600;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    float: right;
-`;
-
 export default CommentInput;

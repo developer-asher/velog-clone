@@ -1,15 +1,16 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import Comment from './Comment';
+import CommentInput from '../components/CommentInput';
 
-const CommentList = () => {
-  
-    return (
-        <React.Fragment>
-            {/* {CommentList.map((l)=>{
-                return <Comment key={l.id} post = {l}/>
-            })} */}
-        </React.Fragment>
-    );
-}
+const CommentList = ({ postId, commentList }) => {
+  return (
+    <>
+      <CommentInput postId={postId} count={commentList?.length} />
+      {commentList?.map((item, index) => {
+        return <Comment key={index} {...item} />;
+      })}
+    </>
+  );
+};
 
 export default CommentList;
