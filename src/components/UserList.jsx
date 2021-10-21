@@ -1,32 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+import { history } from "../redux/configureStore";
 
-const UserList = () => {
+const UserList = (props) => {
+  const { id, postTitle, postIntro, postTime, commentCnt } = props;
+  console.log(props)
+  const handleClick = () => {
+    history.push(`/post/detail/${id}`);
+  };
+
   return (
     <React.Fragment>
       <Wrap>
         <Side>
           <UserListWrap>
-            <FirstPostWrap>
-              <a href="#">
+            <FirstPostWrap onClick={handleClick}>
+              <a href="">
                 <PostImagePreview />
               </a>
-              <a href="#" style={{ textDecoration: "none" }}>
-                <PostTitle>제목: 리액트는 개힘들드아아앙</PostTitle>
+              <a href="" style={{ textDecoration: "none" }}>
+                <PostTitle>{postTitle}</PostTitle>
               </a>
-              <PostTextPreview>
-                여기서 컨텐츠 내용 중 Text의 상단 (일부분)이 보입니다.
-                폰트색상도 약간 연하구여, 글씨가 많아지면 알아서 잘려서
-                보입니다. 글의 상단만 보일 수 있게 해주져!! 짱이져? 여기서
-                컨텐츠 내용 중 Text의 상단 (일부분)이 보입니다. 폰트색상도 약간
-                연하구여, 글씨가 많아지면 알아서 잘려서 보입니다. 글의 상단만
-                보일 수 있게 해주져!! 짱이져? 여기서 컨텐츠 내용 중 Text의 상단
-                (일부분)이 보입니다. 폰트색상도 약간 연하구여, 글씨가 많아지면
-                알아서 잘려서 보입니다. 글의 상단만 보일 수 있게 해주져!!
-                짱이져? 여기서 컨텐츠 내용 중 Text의 상단 (일부분)이 보입니다.
-                폰트색상도 약간 연하구여, 글씨가 많아지면 알아서 잘려서
-                보입니다. 글의 상단만 보일 수 있게 해주져!! 짱이져?
-              </PostTextPreview>
+              <PostTextPreview>{postIntro}</PostTextPreview>
               {/* <PostHashtagWrap>
                 <a href="#" style={{ textDecoration: "none" }}>
                   <PostTag>Project</PostTag>
@@ -42,12 +37,13 @@ const UserList = () => {
                 </a>
               </PostHashtagWrap> */}
               <CommentInfoWrap>
-                <span>6일 전</span>
-                <CommentPointfont> · </CommentPointfont>
-                <span>0개의 댓글</span>
+                <span>{postTime}</span>
+                <CommentPointfont></CommentPointfont>
+                <span>{commentCnt}</span>
               </CommentInfoWrap>
             </FirstPostWrap>
           </UserListWrap>
+          <DivLine />
         </Side>
       </Wrap>
     </React.Fragment>
@@ -55,6 +51,16 @@ const UserList = () => {
 };
 
 export default UserList;
+
+const DivLine = styled.div`
+  background: rgb(233, 236, 239);
+  width: 100%;
+  height: 1px;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  box-sizing: inherit;
+  display: block;
+`;
 
 const Wrap = styled.div`
   padding-bottom: 4rem;
@@ -90,8 +96,10 @@ const PostImagePreview = styled.div`
   position: relative;
   box-sizing: inherit;
   display: block;
-  background: url("https://zonerantivirus.com/wp-content/uploads/default-image.png");
   background-size: cover;
+  // background: url("https://zonerantivirus.com/wp-content/uploads/default-image.png");
+  background: ${(props) =>
+    props.background ? `url(${props.background});` : ``};
 `;
 
 const PostTitle = styled.p`

@@ -1,16 +1,28 @@
-import React from "react";
-//elements
-import FlexBox from "../elements/FlexBox";
-import Button from "../elements/Button";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { contentActions } from "../redux/modules/content";
+
 //components
 import UserList from "../components/UserList";
 import UserInfo from "../components/UserInfo";
-import Login from "../components/Login";
+
 const UserPage = (props) => {
+  const dispatch = useDispatch();
+  const mylist = useSelector((state) => state.content.mycontent?.posts);
+  // console.log(mylist);
+  const userId = props.match.params.userNickname
+  console.log(userId)
+  useEffect(() => {
+    if (mylist !== null) {
+      dispatch(contentActions.getMyContentDB(userId));
+    }
+  }, []);
   return (
     <React.Fragment>
-      <UserInfo />
-      <UserList />
+      <UserInfo id={userId}/>
+      {mylist?.map((l, i) => {
+        return <UserList key={i} {...l} id={userId}/>;
+      })}
     </React.Fragment>
   );
 };

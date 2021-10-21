@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { commentActions } from "../redux/modules/comment";
 const Comment = (props) => {
   const commentiist = useSelector((state) => state.comment.commentList);
+  const username = useSelector((state) => state.user.user.userNickname)
   const dispatch = useDispatch();
-  console.log(props);
+
   const commentId = props.commentId;
   const deleteComment = () => {
     dispatch(commentActions.deleteComment(commentId));
@@ -21,7 +22,7 @@ const Comment = (props) => {
           <CmtUserInfoDiv>
             <CmtProfile />
             <CmtUserInfo>
-              {/* <UserNickName>유저네임</UserNickName> */}
+              <UserNickName>{username}</UserNickName>
               <CmtInsertDT></CmtInsertDT>
               <Span onClick={deleteComment}>삭제</Span>/
               <Span onClick={updateComment}>수정</Span>

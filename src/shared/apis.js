@@ -23,6 +23,7 @@ const apis = {
   getPost: () => instance.get("/posts"),
   signUp: (userinfo) => instance.post("/users/signup", userinfo),
   Login: (user) => instance.post("/users/auth", user),
+  getMyPost: (userNickname) => instance.get(`users/@${userNickname}`,{headers: authHeader()}),
   // addcomment: (postId,commentContent) => instance.post(`posts/${postId}/comments`,commentContent),
 };
 

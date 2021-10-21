@@ -7,11 +7,14 @@ import UserMenu from './UserMenu';
 import { userActions } from '../redux/modules/user';
 import { useDispatch } from 'react-redux';
 
+import { contentActions } from '../redux/modules/content';
 const ToggleUserMenu = ({ visible }) => {
+  const userNickname = localStorage.getItem("userNickname")
   const dispatch = useDispatch();
   const handleClick = ({ target }) => {
     if (target.classList.contains('post_my')) {
-      history.push("/userpage")
+      dispatch(contentActions.getMyContentDB());
+      history.push(`/users/@${userNickname}`)
       // 유제 페이지로 이동
     }
     if (target.classList.contains('post_write')) {

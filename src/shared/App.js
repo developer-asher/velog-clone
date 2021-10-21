@@ -29,7 +29,8 @@ function App() {
           <Route path="/post/detail/:id" exact component={PostDetail} />
           {/* <Route path='/post/write' exact component={PostWrite} /> */}
           <Route path="/post/edit/:id" exact component={PostEdit} />
-          <Route path="/userpage" exact component={UserPage} />
+          <Route path="/users/@:userNickname" exact component={UserPage} />
+          
         </ConnectedRouter>
       </Container>
       <Footer />
