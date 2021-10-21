@@ -8,6 +8,7 @@ const Button = ({ children, ...rest }) => {
 const ButtonEle = styled.button`
   ${props => (props.width ? `width:${props.width};` : ``)};
   ${props => (props.height ? `height:${props.height};` : ``)};
+  margin: ${props => (props.margin ? `${props.margin};` : `0;`)};
   border: ${props => (props.bd ? `${props.bd};` : `none;`)};
   border-radius: ${props => (props.bd_radius ? `${props.bd_radius};` : `0;`)};
   padding: ${props => (props.padding ? `${props.padding};` : `5px 15px;`)};

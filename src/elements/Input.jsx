@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Input = ({ ...rest }) => {
+const Input = ({ children, ...rest }) => {
   return <InputEle {...rest} />;
 };
 
