@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const UserInfo = () => {
-  const userNickname = localStorage.getItem("username")
+  const userNickname = localStorage.getItem("userNickname")
   return (
     <React.Fragment>
       <Wrap>

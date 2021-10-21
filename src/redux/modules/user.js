@@ -49,11 +49,11 @@ const loginDB = (user) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    const tokenCheck = localStorage.getItem("token");
-    const username = localStorage.getItem("username");
-    
-    if (tokenCheck) {
-      dispatch(setUser({username:username}));
+    const token = localStorage.getItem("token");
+    const userNickname = localStorage.getItem("userNickname");
+
+    if (token) {
+      dispatch(setUser({ userNickname: userNickname, token: token }));
     }
   };
 };
@@ -64,14 +64,14 @@ export default handleActions(
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
         localStorage.setItem("token", action.payload.user.token);
-        localStorage.setItem("username", action.payload.user.userNickname);
+        localStorage.setItem("userNickname", action.payload.user.userNickname);
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         localStorage.removeItem("token");
-        localStorage.removeItem("username");
+        localStorage.removeItem("userNickname");
         draft.user = null;
         draft.is_login = false;
       }),

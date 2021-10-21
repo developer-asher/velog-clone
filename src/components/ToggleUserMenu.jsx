@@ -11,7 +11,7 @@ const ToggleUserMenu = ({ visible }) => {
   const dispatch = useDispatch();
   const handleClick = ({ target }) => {
     if (target.classList.contains('post_my')) {
-      history.push("/mypage")
+      history.push("/userpage")
       // 유제 페이지로 이동
     }
     if (target.classList.contains('post_write')) {
@@ -19,6 +19,7 @@ const ToggleUserMenu = ({ visible }) => {
     }
     if (target.classList.contains('logout')) {
       dispatch(userActions.logOut())
+      history.replace("/")
       // 로그아웃
     }
   };
