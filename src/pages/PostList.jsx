@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Post from '../components/Post';
 import { contentActions } from '../redux/modules/content';
+import Post from '../components/Post';
 
 const PostList = props => {
   const dispatch = useDispatch();
@@ -17,13 +15,11 @@ const PostList = props => {
 
   return (
     <>
-      <Header />
       <List>
         {posts.map((item, index) => {
           return <Post key={item.postId} {...item} />;
         })}
       </List>
-      <Footer />
     </>
   );
 };

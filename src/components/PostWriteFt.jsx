@@ -9,21 +9,30 @@ import { useDispatch } from 'react-redux';
 import { history } from '../redux/configureStore';
 import { contentActions } from '../redux/modules/content';
 
-const PostWriteFt = ({ post, ...rest }) => {
+const PostWriteFt = ({ post, edit, postId, ...rest }) => {
   const dispatch = useDispatch();
 
   const goBack = () => {
     history.replace('/');
   };
 
-  // preview는 있는데 image_url이 없으면 출간 안되도록
   const postContent = () => {
-    if (post.is_preview && post.image_url === '') {
-      alert('이미지를 업로드해주세요!');
+    if (!post.title) {
+      alert('제목을 입력해주세요!');
+      return false;
+    }
+    if (!post.markdown) {
+      alert('내용을 입력해주세요!');
       return false;
     }
 
-    dispatch(contentActions.setContentDB(post));
+    if (edit === 'postEdit') {
+      // 게시글 수정
+      dispatch(contentActions.editContentDB(postId, post));
+    } else {
+      // 새 게시글 작성
+      dispatch(contentActions.addContentDB(post));
+    }
   };
 
   return (
@@ -49,7 +58,7 @@ const PostWriteFt = ({ post, ...rest }) => {
 };
 
 const OuterFt = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   z-index: 5;

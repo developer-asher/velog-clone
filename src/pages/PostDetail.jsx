@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { history } from '../redux/configureStore';
 import { contentActions } from '../redux/modules/content';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import CommentList from '../components/CommentList';
+import MarkdownRender from '../components/MarkdownRender';
 import Button from '../elements/Button';
 import Divider from '../elements/Divider';
 import FlexBox from '../elements/FlexBox';
@@ -14,32 +14,26 @@ import Image from '../elements/Image';
 const PostDetail = props => {
   const dispatch = useDispatch();
   const id = props.match.params.id;
-  const posts = useSelector(state => state.content.list);
-  const post = posts.find(item => {
-    return item.postId === parseInt(id);
-  });
+  const detail = useSelector(state => state.content.detail);
 
-  console.log(post);
+  const post = detail?.post;
+  const comments = detail?.comments;
 
   const editPost = () => {
     console.log('게시글 수정');
-    // history.push(`/post/edit/${id}`);
+    history.push(`/post/edit/${id}`);
   };
 
   const deletePost = () => {
-    console.log('게시글 삭제', post.postId);
+    dispatch(contentActions.deleteContentDB(id));
   };
 
   useEffect(() => {
-    if (post) {
-      return false;
-    }
-    dispatch(contentActions.getContentDB());
+    dispatch(contentActions.detailContentDB(id));
   }, []);
 
   return (
     <>
-      <Header />
       <FlexBox justify='space-between'>
         <Section>
           <Head className='head'>
@@ -62,32 +56,38 @@ const PostDetail = props => {
 
           <ContentWrap className='content'>
             <Image src='http://via.placeholder.com/100x30' alt='임시' />
-            <Content>{post?.postContent}</Content>
+            <Content>
+              <MarkdownRender>{post?.postContent}</MarkdownRender>
+            </Content>
           </ContentWrap>
 
           <Profile className='flexbox profile'>
-            <Image src='http://via.placeholder.com/100x100' alt='임시' />
+            <Image width='100px' height='100px' circle alt='임시' />
             <ProfileInfo>
               <ProfileName>{post?.userNickname}</ProfileName>
               <ProfileDesc></ProfileDesc>
             </ProfileInfo>
           </Profile>
-          {/* comment input compo */}
-          {/* comment list compo */}
         </Section>
-        <Aside>{post?.postContent}</Aside>
+        {/* <Aside>{post?.postContent}</Aside> */}
+        <Aside>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem
+          deserunt maxime voluptates porro cupiditate voluptate! Impedit magnam,
+          nobis ea laudantium explicabo accusamus aliquid dolorem veniam minus,
+          iure sapiente vero!
+        </Aside>
       </FlexBox>
-      <Footer />
+      <CommentList postId={id} commentList={comments} />
     </>
   );
 };
 
 const Section = styled.section`
-  flex-basis: 70%;
+  flex-basis: 72%;
 `;
 const Aside = styled.aside`
   flex-basis: 25%;
-  padding-left: 1%;
+  padding-left: 2%;
   border-left: 1px solid #ccc;
 `;
 const Head = styled.div``;
@@ -117,7 +117,7 @@ const ContentWrap = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Content = styled.p`
+const Content = styled.div`
   margin: 40px 0;
   font-size: 1.1rem;
 `;

@@ -14,7 +14,7 @@ import UploadFile from '../components/UploadFile';
 
 const PostWrite = props => {
   const dispatch = useDispatch();
-  const { preview, image_url } = useSelector(state => state.image);
+  const { image_url } = useSelector(state => state.image);
   const [input, setInput] = useState({ title: '', markdown: '' });
   const { title, markdown } = input;
 
@@ -30,10 +30,10 @@ const PostWrite = props => {
   useEffect(() => {
     setInput({
       ...input,
+      markdown: image_url ? `![Alt text](${image_url})\n ${markdown}` : ``,
       image_url: image_url,
-      is_preview: preview ? true : false,
     });
-  }, [preview, image_url]);
+  }, [image_url]);
 
   return (
     <FlexBox justify='space-between' height='100%'>
@@ -67,7 +67,7 @@ const PostWrite = props => {
             value={markdown}
             onChange={handleChange}
             placeholder='당신의 이야기를 적어보세요...'
-            height='calc(100% - 230px)'
+            height='calc(100% - 250px)'
             bd='none'
             bg_color='transparent'
             outline='none'
@@ -78,18 +78,17 @@ const PostWrite = props => {
       </Markdown>
       <Preview>
         <MarkdownRender>{`# ${title}`}</MarkdownRender>
-        <MarkdownRender>
-          {preview ? `![](${preview}) \n ${markdown}` : `${markdown}`}
-        </MarkdownRender>
+        <MarkdownRender>{markdown}</MarkdownRender>
       </Preview>
     </FlexBox>
   );
 };
 
 const Markdown = styled.div`
+  position: relative;
   min-height: 100%;
-  flex-basis: 48%;
-  width: 48%;
+  flex-basis: 50%;
+  width: 50%;
 
   @media all and (max-width: 1024px) {
     flex-basis: 100%;
@@ -98,12 +97,12 @@ const Markdown = styled.div`
 `;
 const Preview = styled.div`
   font-size: 1.1rem;
-  height: 100%;
+  height: 100vh;
   max-height: 100%;
-  scroll-y: auto;
+  overflow-y: auto;
   padding: 20px;
-  flex-basis: 48%;
-  width: 48%;
+  flex-basis: 50%;
+  width: 50%;
   background-color: #fff;
 
   & > h1:first-child {
@@ -129,40 +128,6 @@ const Preview = styled.div`
 const WriteWrap = styled.div`
   height: 100vh;
   max-height: 100vh;
+  padding-left: 10px;
 `;
-
-// const ButtonWrap = styled.div`
-//   margin-bottom: 40px;
-
-//   & > button,
-//   & > span {
-//     margin-left: 5px;
-//     padding: 5px;
-//     font-size: 1.1rem;
-//   }
-//   & > button:first-child {
-//     margin-left: 0;
-//   }
-//   & > span {
-//     color: #aaa;
-//   }
-// `;
-
-{
-  /* <ButtonWrap>
-<Button>H1</Button>
-<Button>H2</Button>
-<Button>H3</Button>
-<Button>H4</Button>
-<span>|</span>
-<Button>B</Button>
-<Button>I</Button>
-<Button>T</Button>
-<span>|</span>
-<Button>"</Button>
-<Button>link</Button>
-<Button>file</Button>
-<Button>code</Button>
-</ButtonWrap> */
-}
 export default PostWrite;
