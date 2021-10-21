@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import { history } from '../redux/configureStore';
+import ToggleUserMenu from './ToggleUserMenu';
+import Login from './Login';
 import Button from '../elements/Button';
 import FlexBox from '../elements/FlexBox';
-import ToggleUserMenu from './ToggleUserMenu';
 
 const Header = props => {
-  const is_login = false;
+  const is_login = useSelector(state => state.user.is_login);
+  const { pathname } = useSelector(state => state.router.location);
+
   const modal = useRef();
   const [toggle, setToggle] = useState(false);
 
@@ -36,6 +40,9 @@ const Header = props => {
     };
   }, []);
 
+  if (pathname === '/post/write' || pathname.includes('edit')) {
+    return <></>;
+  }
   return (
     <HeaderWrap>
       <FlexBox justify='space-between'>
@@ -67,14 +74,7 @@ const Header = props => {
             <ToggleUserMenu visible={toggle} />
           </LoginStBox>
         ) : (
-          <Button
-            bd_radius='30px'
-            bg_color='#343a3f'
-            color='#ffffff'
-            ft_size='1.1rem'
-          >
-            로그인
-          </Button>
+          <Login />
         )}
       </FlexBox>
     </HeaderWrap>

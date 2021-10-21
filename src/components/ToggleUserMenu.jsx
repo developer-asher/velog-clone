@@ -1,19 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { history } from '../redux/configureStore';
+import { userActions } from '../redux/modules/user';
 import UserMenu from './UserMenu';
 
 const ToggleUserMenu = ({ visible }) => {
+  const dispatch = useDispatch();
   const handleClick = ({ target }) => {
     if (target.classList.contains('post_my')) {
-      // 유제 페이지로 이동
+      history.push('/userpage');
     }
     if (target.classList.contains('post_write')) {
       history.push('/post/write');
     }
     if (target.classList.contains('logout')) {
-      // 로그아웃
+      dispatch(userActions.logOut());
+      history.replace('/');
     }
   };
 
@@ -22,7 +26,6 @@ const ToggleUserMenu = ({ visible }) => {
       <UserMenuList onClick={handleClick}>
         <UserMenu className='post_my'>내 벨로그</UserMenu>
         <UserMenu className='post_write'>새 글 작성</UserMenu>
-        {/* <UserMenu className='setting'>설정</UserMenu> */}
         <UserMenu className='logout'>로그아웃</UserMenu>
       </UserMenuList>
     );
@@ -34,6 +37,7 @@ const UserMenuList = styled.ul`
   position: absolute;
   top: 100%;
   right: 0px;
+  z-index: 5;
   width: 12rem;
   margin-top: 1rem;
   padding-left: 0;
