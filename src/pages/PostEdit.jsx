@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { imageActions } from '../redux/modules/image';
 import PostWriteFt from '../components/PostWriteFt';
 import MarkdownRender from '../components/MarkdownRender';
-// import Button from '../elements/Button';
 import FlexBox from '../elements/FlexBox';
 import Input from '../elements/Input';
 import TextArea from '../elements/TextArea';
@@ -14,15 +12,16 @@ import UploadFile from '../components/UploadFile';
 
 const PostEdit = props => {
   const id = props.match.params.id;
-  const posts = useSelector(state => state.content.list);
-  const post = posts.find(item => {
-    return item.postId === parseInt(id);
-  });
+  // const posts = useSelector(state => state.content.list);
+  const detailPost = useSelector(state => state.content.detail.post);
+  // const post = posts.find(item => {
+  //   return item.postId === parseInt(id);
+  // });
 
-  const { image_url } = useSelector(state => state.image);
+  const image = useSelector(state => state.image.image_url); // 이미지 업로드 시
   const [input, setInput] = useState({
-    title: post?.postTitle,
-    markdown: post?.postContent,
+    title: detailPost?.postTitle,
+    markdown: detailPost?.postContent,
     image_url: '',
   });
   const { title, markdown } = input;
@@ -39,12 +38,10 @@ const PostEdit = props => {
   useEffect(() => {
     setInput({
       ...input,
-      markdown: image_url
-        ? `![Alt text](${image_url})\n ${markdown}`
-        : markdown,
-      image_url: image_url ? image_url : post?.postImage,
+      markdown: image ? `![Alt text](${image})\n ${markdown}` : markdown,
+      image_url: image ? image : detailPost?.postImage,
     });
-  }, [image_url]);
+  }, [image]);
 
   return (
     <FlexBox justify='space-between' height='100%'>

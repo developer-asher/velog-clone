@@ -13,7 +13,6 @@ AWS.config.update({
   }),
 });
 
-const SET_PREVIEW = 'SET_PREVIEW';
 const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 
 const initialState = {
@@ -22,9 +21,6 @@ const initialState = {
   file: null,
 };
 
-const setPreview = createAction(SET_PREVIEW, preview => ({
-  preview,
-}));
 const uploadImage = createAction(UPLOAD_IMAGE, image_url => ({
   image_url,
 }));
@@ -59,10 +55,6 @@ const uploadImageS3 = file => {
 
 export default handleActions(
   {
-    [SET_PREVIEW]: (state, action) =>
-      produce(state, draft => {
-        draft.preview = action.payload.preview;
-      }),
     [UPLOAD_IMAGE]: (state, action) =>
       produce(state, draft => {
         draft.image_url = action.payload.image_url;
@@ -72,6 +64,6 @@ export default handleActions(
 );
 
 export const imageActions = {
-  setPreview,
   uploadImageS3,
+  uploadImage,
 };

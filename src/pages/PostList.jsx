@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+import { imageActions } from '../redux/modules/image';
 import { contentActions } from '../redux/modules/content';
 import Post from '../components/Post';
 
@@ -11,6 +12,7 @@ const PostList = props => {
 
   useEffect(() => {
     dispatch(contentActions.getContentDB());
+    dispatch(imageActions.uploadImage(''));
   }, []);
 
   return (
