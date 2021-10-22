@@ -11,6 +11,7 @@ import PostList from '../pages/PostList';
 import PostWrite from '../pages/PostWrite';
 import PostDetail from '../pages/PostDetail';
 import PostEdit from '../pages/PostEdit';
+import UserPage from '../pages/UserPage';
 import Header from '../components/Header';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/post/detail/:id' exact component={PostDetail} />
           <Route path='/post/write' exact component={PostWrite} />
           <Route path='/post/edit/:id' exact component={PostEdit} />
+          <Route path='/users/@:userNickname' exact component={UserPage} />
         </ConnectedRouter>
       </Container>
       {/* {history.location.pathname === '/post/write' ? `` : <Footer />} */}

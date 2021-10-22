@@ -15,6 +15,8 @@ const apis = {
   // 로그인
   signUp: userinfo => instance.post('/users/signup', userinfo),
   Login: user => instance.post('/users/auth', user),
+  getMyPost: userNickname =>
+    instance.get(`users/@${userNickname}`, { headers: authHeader() }),
 
   // 게시물
   getContentPost: () => instance.get('/posts'),

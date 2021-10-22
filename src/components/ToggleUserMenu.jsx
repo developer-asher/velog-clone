@@ -2,15 +2,19 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { history } from '../redux/configureStore';
+import { contentActions } from '../redux/modules/content';
 import { userActions } from '../redux/modules/user';
+import { history } from '../redux/configureStore';
 import UserMenu from './UserMenu';
 
 const ToggleUserMenu = ({ visible }) => {
+  const userNickname = localStorage.getItem('userNickname');
   const dispatch = useDispatch();
+
   const handleClick = ({ target }) => {
     if (target.classList.contains('post_my')) {
-      history.push('/userpage');
+      dispatch(contentActions.getMyContentDB());
+      history.push(`/users/@${userNickname}`);
     }
     if (target.classList.contains('post_write')) {
       history.push('/post/write');
