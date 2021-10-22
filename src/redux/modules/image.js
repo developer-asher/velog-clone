@@ -9,7 +9,7 @@ dotenv.config();
 AWS.config.update({
   region: 'ap-northeast-2',
   credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: process.env.REACT_APP_AWS_POOL_ID,
+    IdentityPoolId: 'ap-northeast-2:017a6935-4e6e-43ea-885e-dfee1135bc77',
   }),
 });
 
