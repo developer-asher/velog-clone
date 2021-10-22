@@ -55,9 +55,14 @@ const PostDetail = props => {
           </Head>
 
           <ContentWrap className='content'>
-            <Image src='http://via.placeholder.com/100x30' alt='임시' />
+            {post?.postImage ? (
+              <Image src={post?.postImage} alt='임시' />
+            ) : (
+              <></>
+            )}
             <Content>
               <MarkdownRender>{post?.postContent}</MarkdownRender>
+              {/* markdown parsing */}
             </Content>
           </ContentWrap>
 
@@ -120,6 +125,17 @@ const ContentWrap = styled.div`
 const Content = styled.div`
   margin: 40px 0;
   font-size: 1.1rem;
+  & img {
+    display: block;
+    margin: 3rem auto;
+    max-width: 100%;
+  }
+  & > blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    border-left: 3px solid #14b885;
+    padding-left: 10px;
+  }
 `;
 const Profile = styled.div`
   display: flex;

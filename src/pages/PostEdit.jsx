@@ -42,7 +42,7 @@ const PostEdit = props => {
       markdown: image_url
         ? `![Alt text](${image_url})\n ${markdown}`
         : markdown,
-      image_url: image_url,
+      image_url: image_url ? image_url : post?.postImage,
     });
   }, [image_url]);
 

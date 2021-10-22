@@ -16,7 +16,7 @@ const PostList = props => {
   return (
     <>
       <List>
-        {posts.map((item, index) => {
+        {posts?.map((item, index) => {
           return <Post key={item.postId} {...item} />;
         })}
       </List>

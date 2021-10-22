@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { history } from '../redux/configureStore';
+import MarkdownRender from '../components/MarkdownRender';
 import FlexBox from '../elements/FlexBox';
 import Image from '../elements/Image';
 
@@ -23,7 +24,10 @@ const Post = ({
       {postImage ? <Image max_height='200px' src={postImage} alt='' /> : <></>}
       <Desc className='desc'>
         <Title className='title'>{postTitle}</Title>
-        <Content className='content'>{postContent}</Content>
+        <Content className='content'>
+          <MarkdownRender>{postContent}</MarkdownRender>
+          {/* {postContent} */}
+        </Content>
       </Desc>
       <PostBottom>
         <DateCmt>
@@ -55,18 +59,20 @@ const Post = ({
 
 const Content = styled.div`
   margin-top: 10px;
+
+  > * {
+    display: none;
+  }
+  > h2 {
+    display: block;
+  }
 `;
 
 const DateCmt = styled.p`
   padding: 0 15px;
 `;
 
-const PostBottom = styled.div`
-  // position: relative;
-  // left: 0;
-  // bottom: 0;
-  // width: 100%;
-`;
+const PostBottom = styled.div``;
 
 const Item = styled.li`
   position: relative;
