@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
 import { commentActions } from '../redux/modules/comment';
 import Button from '../elements/Button';
-import { useDispatch } from 'react-redux';
+import TextArea from '../elements/TextArea';
 
-const Comment = ({ commentContent, commentDate, userNickname }) => {
+const Comment = ({
+  postId,
+  commentContent,
+  commentDate,
+  userNickname,
+  commentId,
+}) => {
   const dispatch = useDispatch();
   const loginUser = localStorage.getItem('userNickname');
+  const [isEdit, setIsEdit] = useState(false);
+  const [input, setInput] = useState({ comment: commentContent });
+  const { comment } = input;
+  const textareaRef = useRef(null);
 
   const handleClick = e => {
     const { textContent } = e.target;
 
     if (textContent === '수정') {
-      // dispatch(commentActions.editCommentDB());
+      setIsEdit(!isEdit);
     }
     if (textContent === '삭제') {
-      // dispatch(commentActions.deleteCommentDB());
+      dispatch(commentActions.deleteCommentDB(postId, commentId));
     }
+  };
+
+  const handleChange = e => {
+    const { value, name } = e.target;
+
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const editComment = () => {
+    dispatch(commentActions.editCommentDB(postId, commentId, comment));
+    setInput({
+      comment: '',
+    });
+    setIsEdit(false);
   };
 
   return (
@@ -45,11 +73,36 @@ const Comment = ({ commentContent, commentDate, userNickname }) => {
           </CmtUserInfo>
         </CmtUserInfoDiv>
         {/* 댓글 */}
-        <CmtWrapTextDiv>{commentContent}</CmtWrapTextDiv>
+        {!isEdit ? (
+          <CmtWrapTextDiv>{commentContent}</CmtWrapTextDiv>
+        ) : (
+          <EditCmtWrap>
+            <TextArea
+              ref={textareaRef}
+              name='comment'
+              value={comment}
+              height='50px'
+              margin='2rem 0 1rem 0 '
+              onChange={handleChange}
+            ></TextArea>
+            <Button
+              bd_radius='5px'
+              bg_color='#0097a7'
+              color='#fff'
+              onClick={editComment}
+            >
+              댓글수정
+            </Button>
+          </EditCmtWrap>
+        )}
       </CommentWrap>
     </React.Fragment>
   );
 };
+
+const EditCmtWrap = styled.div`
+  text-align: right;
+`;
 
 const ButtonWrap = styled.div`
   text-align: right;

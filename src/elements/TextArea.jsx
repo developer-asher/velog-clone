@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-const TextArea = ({ children, ...rest }) => {
-  return <TextAreaEle {...rest}></TextAreaEle>;
-};
+const TextArea = forwardRef((props, ref) => {
+  const { ...rest } = props;
+
+  useEffect(() => {
+    if (ref.current) ref.current.focus();
+  }, [ref]);
+
+  return (
+    <TextAreaEle
+      {...rest}
+      ref={ref}
+      onFocus={e =>
+        e.currentTarget.setSelectionRange(
+          e.currentTarget.value.length,
+          e.currentTarget.value.length,
+        )
+      }
+    ></TextAreaEle>
+  );
+});
 
 const TextAreaEle = styled.textarea`
   width: 100%;
   ${props => (props.height ? `height: ${props.height};` : ``)};
+  ${props => (props.margin ? `margin: ${props.margin};` : ``)};
   ${props => (props.bd ? `border: ${props.bd};` : ``)};
   ${props => (props.padding ? `padding:10px;` : ``)};
   font-size: ${props => (props.ft_size ? `${props.ft_size};` : `14px`)};
