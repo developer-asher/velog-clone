@@ -38,15 +38,18 @@ const PostDetail = props => {
         <Section>
           <Head className='head'>
             <Title>{post?.postTitle}</Title>
-            <ButtonWrap className='btn_list'>
-              <Button ft_size='1.1rem' onClick={editPost}>
-                수정
-              </Button>
-              <Button ft_size='1.1rem' onClick={deletePost}>
-                삭제
-              </Button>
-            </ButtonWrap>
-
+            {post?.postUserNickname === localStorage.getItem('userNickname') ? (
+              <ButtonWrap className='btn_list'>
+                <Button ft_size='1.1rem' onClick={editPost}>
+                  수정
+                </Button>
+                <Button ft_size='1.1rem' onClick={deletePost}>
+                  삭제
+                </Button>
+              </ButtonWrap>
+            ) : (
+              <></>
+            )}
             <FlexBox margin='10px 0 0 0'>
               <VelogName className='nickname'>
                 {post?.postUserNickname}
