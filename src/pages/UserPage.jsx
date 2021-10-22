@@ -9,9 +9,8 @@ import UserInfo from "../components/UserInfo";
 const UserPage = (props) => {
   const dispatch = useDispatch();
   const mylist = useSelector((state) => state.content.mycontent?.posts);
-  // console.log(mylist);
-  const userId = props.match.params.userNickname
-  console.log(userId)
+  const userId = props.match.params.userNickname;
+
   useEffect(() => {
     if (mylist !== null) {
       dispatch(contentActions.getMyContentDB(userId));
@@ -19,9 +18,9 @@ const UserPage = (props) => {
   }, []);
   return (
     <React.Fragment>
-      <UserInfo id={userId}/>
+      <UserInfo id={userId} />
       {mylist?.map((l, i) => {
-        return <UserList key={i} {...l} id={userId}/>;
+        return <UserList key={i} {...l} id={userId} />;
       })}
     </React.Fragment>
   );

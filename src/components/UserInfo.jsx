@@ -1,9 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-const UserInfo = () => {
-  const userNickname = localStorage.getItem("userNickname")
+const UserInfo = (id) => {
   return (
     <React.Fragment>
       <Wrap>
@@ -12,7 +10,7 @@ const UserInfo = () => {
             <UserInfoDiv>
               <UserProfile></UserProfile>
               <UserTextDiv>
-                <UserNickName>{userNickname}</UserNickName>
+                <UserNickName>{id.id}</UserNickName>
                 {/* <UserBlogDiscription>자면 안된드아아앙</UserBlogDiscription> */}
               </UserTextDiv>
             </UserInfoDiv>
@@ -107,6 +105,3 @@ const DivLine = styled.div`
   box-sizing: inherit;
   display: block;
 `;
-
-
-

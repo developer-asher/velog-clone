@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { history } from "../redux/configureStore";
 
 const UserList = (props) => {
-  const { id, postTitle, postIntro, postTime, commentCnt } = props;
-  console.log(props)
+  const { postId, postImage, id, postTitle, postIntro, postTime, commentCnt } =
+    props;
+
   const handleClick = () => {
-    history.push(`/post/detail/${id}`);
+    history.push(`/post/detail/${postId}`);
   };
 
   return (
@@ -16,7 +17,7 @@ const UserList = (props) => {
           <UserListWrap>
             <FirstPostWrap onClick={handleClick}>
               <a href="">
-                <PostImagePreview />
+                <PostImagePreview background={postImage} />
               </a>
               <a href="" style={{ textDecoration: "none" }}>
                 <PostTitle>{postTitle}</PostTitle>
@@ -99,7 +100,9 @@ const PostImagePreview = styled.div`
   background-size: cover;
   // background: url("https://zonerantivirus.com/wp-content/uploads/default-image.png");
   background: ${(props) =>
-    props.background ? `url(${props.background});` : ``};
+    props.background
+      ? `url("${props.background}");`
+      : `url("https://zonerantivirus.com/wp-content/uploads/default-image.png")`};
 `;
 
 const PostTitle = styled.p`

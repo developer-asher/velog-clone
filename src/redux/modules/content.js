@@ -26,7 +26,6 @@ const getMyContentDB = (userId) => {
     apis
       .getMyPost(userId)
       .then((res) => {
-        console.log(res.data);
         const myContent = res.data;
         dispatch(getMyContent(myContent));
       })
