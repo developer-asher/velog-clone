@@ -1,26 +1,26 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
-import { history } from '../redux/configureStore';
-import { contentActions } from '../redux/modules/content';
-import CommentList from '../components/CommentList';
-import MarkdownRender from '../components/MarkdownRender';
-import Button from '../elements/Button';
-import Divider from '../elements/Divider';
-import FlexBox from '../elements/FlexBox';
-import Image from '../elements/Image';
+import { history } from "../redux/configureStore";
+import { contentActions } from "../redux/modules/content";
+import CommentList from "../components/CommentList";
+import MarkdownRender from "../components/MarkdownRender";
+import Button from "../elements/Button";
+import Divider from "../elements/Divider";
+import FlexBox from "../elements/FlexBox";
+import Image from "../elements/Image";
 
-const PostDetail = props => {
+const PostDetail = (props) => {
   const dispatch = useDispatch();
   const id = props.match.params.id;
-  const detail = useSelector(state => state.content.detail);
-
+  const detail = useSelector((state) => state.content.detail);
+  const is_login = useSelector((state) => state.user.is_login);
   const post = detail?.post;
   const comments = detail?.comments;
 
   const editPost = () => {
-    console.log('게시글 수정');
+    console.log("게시글 수정");
     history.push(`/post/edit/${id}`);
   };
 
@@ -34,29 +34,34 @@ const PostDetail = props => {
 
   return (
     <>
-      <FlexBox justify='space-between'>
+      <FlexBox justify="space-between">
         <Section>
-          <Head className='head'>
+          <Head className="head">
             <Title>{post?.postTitle}</Title>
-            <ButtonWrap className='btn_list'>
-              <Button ft_size='1.1rem' onClick={editPost}>
-                수정
-              </Button>
-              <Button ft_size='1.1rem' onClick={deletePost}>
-                삭제
-              </Button>
-            </ButtonWrap>
 
-            <FlexBox margin='10px 0 0 0'>
-              <VelogName className='nickname'>
+            {post?.postUserNickname == localStorage.getItem("userNickname") ? (
+              <ButtonWrap className="btn_list">
+                <Button ft_size="1.1rem" onClick={editPost}>
+                  수정
+                </Button>
+                <Button ft_size="1.1rem" onClick={deletePost}>
+                  삭제
+                </Button>
+              </ButtonWrap>
+            ) : (
+              <></>
+            )}
+
+            <FlexBox margin="10px 0 0 0">
+              <VelogName className="nickname">
                 {post?.postUserNickname}
               </VelogName>
               <Divider>∙</Divider>
-              <Date className='post_date'>{post?.postTime}</Date>
+              <Date className="post_date">{post?.postTime}</Date>
             </FlexBox>
           </Head>
 
-          <ContentWrap className='content'>
+          <ContentWrap className="content">
             {/* {post?.postImage ? (
               <Image src={post?.postImage} alt='임시' />
             ) : (
@@ -68,8 +73,8 @@ const PostDetail = props => {
             </Content>
           </ContentWrap>
 
-          <Profile className='flexbox profile'>
-            <Image width='100px' height='100px' circle alt='임시' />
+          <Profile className="flexbox profile">
+            <Image width="100px" height="100px" circle alt="임시" />
             <ProfileInfo>
               <ProfileName>{post?.postUserNickname}</ProfileName>
               <ProfileDesc></ProfileDesc>
