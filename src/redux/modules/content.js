@@ -5,15 +5,20 @@ import apis from '../../shared/apis';
 const SET_CONTENT = 'SET_COMMENT';
 const ADD_CONTENT = 'ADD_COMMENT';
 const DETAIL_CONTENT = 'DETAIL_CONTENT';
+const GET_MYCONTENT = 'GET_MYCONTENT';
 
 const initialState = {
   list: [],
   detail: null,
+  mycontent: null,
 };
 
 const setContent = createAction(SET_CONTENT, posts => ({ posts }));
 const addContent = createAction(ADD_CONTENT, posts => ({ posts }));
 const detailContent = createAction(DETAIL_CONTENT, detail => ({ detail }));
+const getMyContent = createAction(GET_MYCONTENT, mycontent => ({
+  mycontent,
+}));
 
 const getContentDB = () => {
   return function (dispatch, getState, { history }) {
@@ -87,7 +92,7 @@ const editContentDB = (postId, post) => {
     console.log(postId, typeof postId, post);
 
     apis
-      .editContentPost(postId, postInfo)
+      .editContentPost(parseInt(postId), postInfo)
       .then(res => {
         console.log(res);
         // const new_list = res.data;
@@ -117,6 +122,20 @@ const deleteContentDB = postId => {
   };
 };
 
+const getMyContentDB = userId => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .getMyPost(userId)
+      .then(res => {
+        const myContent = res.data;
+        dispatch(getMyContent(myContent));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [SET_CONTENT]: (state, action) =>
@@ -126,6 +145,10 @@ export default handleActions(
     [DETAIL_CONTENT]: (state, action) =>
       produce(state, draft => {
         draft.detail = action.payload.detail;
+      }),
+    [GET_MYCONTENT]: (state, action) =>
+      produce(state, draft => {
+        draft.mycontent = action.payload.mycontent;
       }),
   },
   initialState,
@@ -137,4 +160,5 @@ export const contentActions = {
   addContentDB,
   deleteContentDB,
   editContentDB,
+  getMyContentDB,
 };
