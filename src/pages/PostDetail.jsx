@@ -38,6 +38,7 @@ const PostDetail = (props) => {
         <Section>
           <Head className="head">
             <Title>{post?.postTitle}</Title>
+<<<<<<< HEAD
 
             {post?.postUserNickname == localStorage.getItem("userNickname") ? (
               <ButtonWrap className="btn_list">
@@ -45,15 +46,28 @@ const PostDetail = (props) => {
                   수정
                 </Button>
                 <Button ft_size="1.1rem" onClick={deletePost}>
+=======
+            {post?.postUserNickname === localStorage.getItem('userNickname') ? (
+              <ButtonWrap className='btn_list'>
+                <Button ft_size='1.1rem' onClick={editPost}>
+                  수정
+                </Button>
+                <Button ft_size='1.1rem' onClick={deletePost}>
+>>>>>>> 7a7eed7d510099176937ee5597fc40e4ebfe6352
                   삭제
                 </Button>
               </ButtonWrap>
             ) : (
               <></>
             )}
+<<<<<<< HEAD
 
             <FlexBox margin="10px 0 0 0">
               <VelogName className="nickname">
+=======
+            <FlexBox margin='10px 0 0 0'>
+              <VelogName className='nickname'>
+>>>>>>> 7a7eed7d510099176937ee5597fc40e4ebfe6352
                 {post?.postUserNickname}
               </VelogName>
               <Divider>∙</Divider>

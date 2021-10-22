@@ -10,13 +10,19 @@ const CommentList = ({ postId, commentList }) => {
   return (
     <>
       <CommentInput postId={postId} count={commentList?.length} />
-      {comments?.length === 0 || !comments
-        ? commentList?.map((item, index) => {
+      {!comments ? (
+        !commentList ? (
+          <></>
+        ) : (
+          commentList?.map((item, index) => {
             return <Comment key={index} postId={postId} {...item} />;
           })
-        : comments?.map((item, index) => {
-            return <Comment key={index} postId={postId} {...item} />;
-          })}
+        )
+      ) : (
+        comments?.map((item, index) => {
+          return <Comment key={index} postId={postId} {...item} />;
+        })
+      )}
     </>
   );
 };

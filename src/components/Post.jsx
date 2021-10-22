@@ -12,6 +12,7 @@ const Post = ({
   postContent,
   postImage,
   postTime,
+  commentCnt,
   userNickname,
 }) => {
   //
@@ -33,7 +34,7 @@ const Post = ({
         <DateCmt>
           <span className='date'>{postTime}</span>
           <span className='divider'>∙</span>
-          <span className='cnt_comment'>6개의 댓글</span>
+          <span className='cnt_comment'>{commentCnt}개의 댓글</span>
         </DateCmt>
         <FlexBox
           style={{
