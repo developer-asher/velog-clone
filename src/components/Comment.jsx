@@ -16,7 +16,7 @@ const Comment = ({
   const dispatch = useDispatch();
   const loginUser = localStorage.getItem('userNickname');
   const [isEdit, setIsEdit] = useState(false);
-  const [input, setInput] = useState({ comment: commentContent });
+  const [input, setInput] = useState({ comment: '' });
   const { comment } = input;
   const textareaRef = useRef(null);
 
@@ -25,6 +25,10 @@ const Comment = ({
 
     if (textContent === '수정') {
       setIsEdit(!isEdit);
+      setInput({
+        ...input,
+        comment: commentContent,
+      });
     }
     if (textContent === '삭제') {
       dispatch(commentActions.deleteCommentDB(postId, commentId));

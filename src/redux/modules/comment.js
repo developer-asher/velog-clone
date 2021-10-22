@@ -3,25 +3,15 @@ import { produce } from 'immer';
 import apis from '../../shared/apis';
 
 const SET_COMMENT = 'SET_COMMENT';
-const EDIT_COMMENT = 'EDIT_COMMENT';
-const DELETE_COMMENT = 'DELETE_COMMENT';
 
 const initialState = {
   list: [],
 };
 
 const setComment = createAction(SET_COMMENT, comments => ({ comments }));
-const deleteComment = createAction(DELETE_COMMENT, commentData => ({
-  commentData,
-}));
-const editComment = createAction(EDIT_COMMENT, commentData => ({
-  commentData,
-}));
 
 const addCommentDB = (postid, comment) => {
   return function (dispatch, getState, { history }) {
-    console.log('댓글 추가', postid, comment);
-
     const postId = parseInt(postid);
     const commentData = {
       commentContent: comment,
@@ -42,10 +32,6 @@ const addCommentDB = (postid, comment) => {
 
 const deleteCommentDB = (postid, commentid) => {
   return function (dispatch, getState, { history }) {
-    console.log('댓글 삭제');
-    console.log(postid, typeof postid);
-    console.log(commentid, typeof commentid);
-
     const postId = parseInt(postid);
     const commentId = parseInt(commentid);
 
@@ -64,10 +50,6 @@ const deleteCommentDB = (postid, commentid) => {
 
 const editCommentDB = (postid, commentid, comment) => {
   return function (dispatch, getState, { history }) {
-    console.log('댓글 삭제');
-    console.log(postid, typeof postid);
-    console.log(commentid, typeof commentid);
-
     const postId = parseInt(postid);
     const commentId = parseInt(commentid);
     const commentData = {
