@@ -47,19 +47,21 @@ const PostDetail = props => {
               </Button>
             </ButtonWrap>
 
-            <FlexBox margin='10px 0 60px 0'>
-              <VelogName className='nickname'>{post?.userNickname}</VelogName>
+            <FlexBox margin='10px 0 0 0'>
+              <VelogName className='nickname'>
+                {post?.postUserNickname}
+              </VelogName>
               <Divider>∙</Divider>
               <Date className='post_date'>{post?.postTime}</Date>
             </FlexBox>
           </Head>
 
           <ContentWrap className='content'>
-            {post?.postImage ? (
+            {/* {post?.postImage ? (
               <Image src={post?.postImage} alt='임시' />
             ) : (
               <></>
-            )}
+            )} */}
             <Content>
               <MarkdownRender>{post?.postContent}</MarkdownRender>
               {/* markdown parsing */}
@@ -69,18 +71,12 @@ const PostDetail = props => {
           <Profile className='flexbox profile'>
             <Image width='100px' height='100px' circle alt='임시' />
             <ProfileInfo>
-              <ProfileName>{post?.userNickname}</ProfileName>
+              <ProfileName>{post?.postUserNickname}</ProfileName>
               <ProfileDesc></ProfileDesc>
             </ProfileInfo>
           </Profile>
         </Section>
-        {/* <Aside>{post?.postContent}</Aside> */}
-        <Aside>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem dolorem
-          deserunt maxime voluptates porro cupiditate voluptate! Impedit magnam,
-          nobis ea laudantium explicabo accusamus aliquid dolorem veniam minus,
-          iure sapiente vero!
-        </Aside>
+        {/* <Aside>{post?.postTitle}</Aside> */}
       </FlexBox>
       <CommentList postId={id} commentList={comments} />
     </>
@@ -111,8 +107,7 @@ const ButtonWrap = styled.div`
 `;
 
 const VelogName = styled.span`
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-size: 1.2rem;
 `;
 const Date = styled.span`
   font-size: 1rem;
@@ -123,8 +118,8 @@ const ContentWrap = styled.div`
   flex-direction: column;
 `;
 const Content = styled.div`
-  margin: 40px 0;
   font-size: 1.1rem;
+
   & img {
     display: block;
     margin: 3rem auto;
@@ -140,6 +135,7 @@ const Content = styled.div`
 const Profile = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 40px;
 `;
 const ProfileInfo = styled.div`
   margin-left: 20px;
