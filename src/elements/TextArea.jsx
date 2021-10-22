@@ -5,7 +5,7 @@ const TextArea = forwardRef((props, ref) => {
   const { ...rest } = props;
 
   useEffect(() => {
-    if (ref.current) ref.current.focus();
+    if (ref?.current) ref.current.focus();
   }, [ref]);
 
   return (
