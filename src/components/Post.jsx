@@ -63,8 +63,27 @@ const Content = styled.div`
   > * {
     display: none;
   }
-  > h2 {
+  > h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     display: block;
+    margin: 0;
+    margin-bottom: 5px;
+    font-weight: normal;
+  }
+  > h1 {
+    font-size: 1.1rem;
+  }
+  > h2 {
+    font-size: 1rem;
+  }
+  > h3 {
+    font-size: 0.9rem;
+  }
+  > h4 {
+    font-size: 0.8rem;
   }
 `;
 
@@ -107,6 +126,16 @@ const Item = styled.li`
 const Desc = styled.div`
   min-height: 200px;
   max-height: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.2;
+  height: 3.6em;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
 const Title = styled.h2`
   font-size: 1.2rem;
